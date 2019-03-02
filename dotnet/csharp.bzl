@@ -14,6 +14,8 @@
 
 """CSharp bazel rules"""
 
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
 _MONO_UNIX_BIN = "/usr/local/bin/mono"
 
 # TODO(jeremy): Windows when it's available.
@@ -593,7 +595,7 @@ mono_package = repository_rule(
 def csharp_repositories(use_local_mono=False):
   """Adds the repository rules needed for using the C# rules."""
 
-  native.new_http_archive(
+  http_archive(
       name = "nunit",
       url = "http://bazel-mirror.storage.googleapis.com/github.com/nunit/nunitv2/releases/download/2.6.4/NUnit-2.6.4.zip",
       sha256 = "1bd925514f31e7729ccde40a38a512c2accd86895f93465f3dfe6d0b593d7170",
@@ -603,7 +605,7 @@ def csharp_repositories(use_local_mono=False):
       build_file = str(Label("//dotnet:nunit.BUILD")),
   )
 
-  native.new_http_archive(
+  http_archive(
       name = "nuget",
       url = "https://github.com/mono/nuget-binary/archive/0811ba888a80aaff66a93a4c98567ce904ab2663.zip", # Sept 6, 2016
       sha256 = "28323d23b7e6e02d3ba8892f525a1457ad23adb7e3a48908d37c1b5ae37519f6",
